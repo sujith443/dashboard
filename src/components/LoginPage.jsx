@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa'
 import { MdDashboard } from 'react-icons/md'
+import { UserContext } from '../App'
+import { useContext } from 'react'
 
-function LoginPage({ onLogin }) {
+function LoginPage() {
+  const {isLoggedIn, setIsLoggedIn} = useContext(UserContext)
   const [showPassword, setShowPassword] = useState(false)
   const [loginData, setLoginData] = useState({
     email: '',
@@ -12,7 +15,7 @@ function LoginPage({ onLogin }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (loginData.email && loginData.password) {
-      onLogin(true)
+      setIsLoggedIn(true)
     }
   }
 

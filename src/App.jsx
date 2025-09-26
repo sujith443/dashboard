@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import './App.css'
+import { createContext } from 'react'
 
 // Import Components
 import LoginPage from './components/LoginPage'
@@ -18,10 +19,13 @@ import Products from './pages/Products'
 import PracticeSession from './pages/PracticeSession'
 import Settings from './pages/Settings'
 
+export const UserContext = createContext()
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   return (
+    <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
     <Router>
       <Routes>
         <Route 
@@ -30,7 +34,7 @@ function App() {
             isLoggedIn ? (
               <Navigate to="/" replace />
             ) : (
-              <LoginPage onLogin={setIsLoggedIn} />
+              <LoginPage/>
             )
           } 
         />
@@ -38,7 +42,7 @@ function App() {
         <Route 
           path="/" 
           element={
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <ProtectedRoute >
               <div className="dashboard-container">
                 <div className="row g-0">
                   <Sidebar onLogout={() => setIsLoggedIn(false)} />
@@ -57,7 +61,7 @@ function App() {
         <Route 
           path="/analytics" 
           element={
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <ProtectedRoute >
               <div className="dashboard-container">
                 <div className="row g-0">
                   <Sidebar onLogout={() => setIsLoggedIn(false)} />
@@ -76,7 +80,7 @@ function App() {
         <Route 
           path="/users" 
           element={
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <ProtectedRoute >
               <div className="dashboard-container">
                 <div className="row g-0">
                   <Sidebar onLogout={() => setIsLoggedIn(false)} />
@@ -95,7 +99,7 @@ function App() {
         <Route 
           path="/products" 
           element={
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <ProtectedRoute>
               <div className="dashboard-container">
                 <div className="row g-0">
                   <Sidebar onLogout={() => setIsLoggedIn(false)} />
@@ -114,7 +118,7 @@ function App() {
         <Route 
           path="/practice" 
           element={
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <ProtectedRoute>
               <div className="dashboard-container">
                 <div className="row g-0">
                   <Sidebar onLogout={() => setIsLoggedIn(false)} />
@@ -133,7 +137,7 @@ function App() {
         <Route 
           path="/settings" 
           element={
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <ProtectedRoute >
               <div className="dashboard-container">
                 <div className="row g-0">
                   <Sidebar onLogout={() => setIsLoggedIn(false)} />
@@ -152,6 +156,7 @@ function App() {
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>
+    </UserContext.Provider>
   )
 }
 

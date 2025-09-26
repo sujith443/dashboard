@@ -1,5 +1,6 @@
 import { FaUsers, FaBox, FaDollarSign, FaShoppingCart, FaArrowUp, FaArrowDown } from 'react-icons/fa'
-
+import { UserContext } from '../App'
+import { useContext } from 'react'
 function Dashboard() {
   const statsCards = [
     {
@@ -35,6 +36,11 @@ function Dashboard() {
       color: "info"
     }
   ]
+
+  const { isLoggedIn } = useContext(UserContext)
+
+  console.log(isLoggedIn);
+  
 
   return (
     <div>
